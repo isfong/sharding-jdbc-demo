@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+<div id="app">
+    <h1>Users Working</h1>
+    <ul v-for="user in users">
+        <li>NO.: {{user.id}}</li>
+        <li>name: {{user.name}}</li>
+        <li>username: {{user.username}}</li>
+        <li>password: {{user.password}}</li>
+    </ul>
+</div>
+</body>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script type="module">
+
+    // noinspection JSFileReferences
+    import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.esm.browser.js'
+    // JSUnresolvedFunction
+    let vm = new Vue({
+        el: '#app',
+        data() {
+            return {
+                users: [
+                    {
+                        id: 100,
+                        name: 'fong',
+                        username: 'isfong',
+                        password: 'fds324vgfde54354gfd5435hgfd'
+                    },
+                    {
+                        id: 200,
+                        name: 'joy',
+                        username: 'isjoy',
+                        password: 'fds324vgfde54354gfd5435hgfd'
+                    }
+                ]
+            }
+        },
+        created() {
+            axios.get('/users/list')
+                .then(function (response) {
+                    // handle success
+                    console.log(response);
+                    vm.users = response.data;
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                })
+                .finally(function () {
+                    // always executed
+                });
+        }
+    });
+</script>
+</html>

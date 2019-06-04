@@ -1,0 +1,37 @@
+spring:
+  shardingsphere:
+    datasource:
+      names: master, slave
+      master:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:13306/sharding-db-1?characterEncoding=utf-8
+        username: root
+        password: root
+      slave:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:13306/sharding-db-2?characterEncoding=utf-8
+        username: root
+        password: root
+    masterslave:
+      load-balance-algorithm-type: round_robin
+      name: dataSource
+      master-data-source-name: master
+      slave-data-source-names: slave
+    props:
+      sql:
+        show: true
+  main:
+    allow-bean-definition-overriding: true
+  mvc:
+    view:
+      suffix: .html
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
+
+logging:
+  level:
+    com.isfong.sharding.jdbc.demo.mapper: debug
